@@ -44,7 +44,7 @@ function sacar(){
 
 //funciones de busqueda
 function buscarEstudiante() {
-    const encontrado = baseDeEstudiantes.find((el)=> {
+    const encontrado = baseDeEstudiantes.filter((el)=> {
         return el.nombre = prompt("¿Que estudiante desea encontrar?");
     })
     console.log(encontrado);
@@ -52,7 +52,7 @@ function buscarEstudiante() {
 }
 
 function buscarNota(){
-    const encontrado1 = baseDeEstudiantes.find((el)=> {
+    const encontrado1 = baseDeEstudiantes.filter((el)=> {
         return el.nota = prompt("¿Que nota desea encontrar?");
     } )
     console.log(encontrado1);
