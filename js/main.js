@@ -18,8 +18,8 @@ function capturar() {
         this.nota = parseFloat(nota);
     }
 
-    var estudianteCapturado = document.getElementById("nombre").value;
-    var notaCapturada = document.getElementById("nota").value;
+    estudianteCapturado = document.getElementById("nombre").value;
+    notaCapturada = document.getElementById("nota").value;
     
     nuevoEstudiante = new Estudiante(estudianteCapturado, notaCapturada);
     console.log(nuevoEstudiante);
@@ -38,22 +38,24 @@ function agregar(){
 
 //Funcion sacar elementos al array
 function sacar(){
-    baseDeEstudiantes.pop()
+    baseDeEstudiantes.pop(nuevoEstudiante)
     console.log(baseDeEstudiantes);
 }
 
 //funciones de busqueda
 function buscarEstudiante() {
+    let nombreBuscado =  prompt("¿Que estudiante desea encontrar?");
     const encontrado = baseDeEstudiantes.filter((el)=> {
-        return el.nombre = prompt("¿Que estudiante desea encontrar?");
-    })
+        return el.nombre === nombreBuscado;
+    });
     console.log(encontrado);
     
 }
 
 function buscarNota(){
-    const encontrado1 = baseDeEstudiantes.filter((el)=> {
-        return el.nota = prompt("¿Que nota desea encontrar?");
-    } )
+    let notaEncontrada = parseFloat(prompt("¿Que nota desea encontrar?"));
+    const encontrado1 = baseDeEstudiantes.filter((el) => {
+        return el.nota === notaEncontrada;}
+    );
     console.log(encontrado1);
 }
