@@ -1,7 +1,7 @@
 //SIMULADOR DE CALIFICACIONES
 
 //funcion saludar
-/*
+
 function saludar(nombre, apellido, mensaje, mensaje2){
     var mensaje = alert("Hola Bienvenido Profesor");
     var nombre = prompt("Profesor indique su nombre");
@@ -9,7 +9,7 @@ function saludar(nombre, apellido, mensaje, mensaje2){
     var mensaje2 = alert("Bienvenido al sistema de notas profesor"+" "+ nombre+ " "+ apellido);
 } 
 saludar()
-*/ 
+
 
 //Capturar a traves de una funcion constructora
 function capturar() {
