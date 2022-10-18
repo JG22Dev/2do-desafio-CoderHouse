@@ -1,0 +1,24 @@
+
+:root{
+    /*Primary*/
+    --DarkCyan: hsl(185, 75%, 39%);
+}
+
+
+body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: var(--DarkCyan);
+    background-image: url("../images/bg-pattern-top.svg"), url("../images/bg-pattern-bottom.svg");
+    background-repeat: no-repeat, no-repeat;
+    background-position: right 40vw bottom 40vh, left 50vw top 50vh;
+
+}
+
+
+footer{
+    margin: 20vh;
+}
+.attribution { font-size: 11px; text-align: center; }
+.attribution a { color: hsl(228, 45%, 44%); }
