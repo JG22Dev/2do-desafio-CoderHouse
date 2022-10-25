@@ -1,37 +1,46 @@
 //SIMULADOR DE CALIFICACIONES
 
 //funcion saludar
-
+/*
 function saludar(nombre, apellido, mensaje, mensaje2){
     var mensaje = alert("Hola Bienvenido Profesor");
     var nombre = prompt("Profesor indique su nombre");
     var apellido = prompt("Profesor indique su apellido");
     var mensaje2 = alert("Bienvenido al sistema de notas profesor"+" "+ nombre+ " "+ apellido);
 } 
+
+
 saludar()
+*/
+
+//array global
+baseDeEstudiantes = [];
+
 
 
 //Capturar a traves de una funcion constructora
 function capturar() {
-    function Estudiante(nombre, nota) {
-        this.nombre = nombre 
-        this.nota = parseFloat(nota);
+    class Estudiante {
+        constructor(nombre, nota){
+            this.nombre = nombre 
+            this.nota = parseFloat(nota); 
+        }
     }
-
+    
     estudianteCapturado = document.getElementById("nombre").value;
     notaCapturada = document.getElementById("nota").value;
+    
     
     nuevoEstudiante = new Estudiante(estudianteCapturado, notaCapturada);
     console.log(nuevoEstudiante);
     agregar();
 
 }
-//array global
-    baseDeEstudiantes = [];
 
 //Funcion agregar elementos al array
 function agregar(){
-    baseDeEstudiantes.push(nuevoEstudiante)
+    baseDeEstudiantes.push(nuevoEstudiante);
+    localStorage.bases = JSON.stringify(baseDeEstudiantes);
     console.log(baseDeEstudiantes);
 
 };
