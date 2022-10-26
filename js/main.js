@@ -13,6 +13,23 @@ function saludar(nombre, apellido, mensaje, mensaje2){
 saludar()
 */
 
+let mostrarFecha = document.getElementById('fecha');
+let mostrarReloj = document.getElementById('reloj');
+
+let fecha = new Date();
+let diaSemana = ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'];
+let mesAnio = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+
+mostrarFecha.innerHTML = `${diaSemana[fecha.getDay()]}, ${fecha.getDate()} de ${mesAnio[fecha.getMonth()]} de ${fecha.getFullYear()}`;
+
+setInterval(()=>{
+    let hora = new Date();
+    mostrarReloj.innerHTML = hora.toLocaleTimeString();
+},1000);
+
+
+
+
 //array global
 baseDeEstudiantes = [];
 
@@ -26,11 +43,9 @@ function capturar() {
             this.nota = parseFloat(nota); 
         }
     }
-    
     estudianteCapturado = document.getElementById("nombre").value;
     notaCapturada = document.getElementById("nota").value;
-    
-    
+
     nuevoEstudiante = new Estudiante(estudianteCapturado, notaCapturada);
     console.log(nuevoEstudiante);
     agregar();
@@ -40,10 +55,15 @@ function capturar() {
 //Funcion agregar elementos al array
 function agregar(){
     baseDeEstudiantes.push(nuevoEstudiante);
-    localStorage.bases = JSON.stringify(baseDeEstudiantes);
+    localStorage.getItem = estudianteCapturado;
+    localStorage.getItem = notaCapturada
     console.log(baseDeEstudiantes);
-
+    mostrar()
 };
+function mostrar() {
+    let bases = JSON.parse(localStorage.bases)
+    bases.innertHTML += '<' 
+}
 
 //Funcion sacar elementos al array
 function sacar(){
