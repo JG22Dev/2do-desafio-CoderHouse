@@ -1,90 +1,73 @@
-//SIMULADOR DE CALIFICACIONES
-
-//funcion saludar
-/*
-function saludar(nombre, apellido, mensaje, mensaje2){
-    var mensaje = alert("Hola Bienvenido Profesor");
-    var nombre = prompt("Profesor indique su nombre");
-    var apellido = prompt("Profesor indique su apellido");
-    var mensaje2 = alert("Bienvenido al sistema de notas profesor"+" "+ nombre+ " "+ apellido);
-} 
-
-
-saludar()
-*/
-
 let mostrarFecha = document.getElementById('fecha');
 let mostrarReloj = document.getElementById('reloj');
 
 let fecha = new Date();
-let diaSemana = ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'];
+let diaSemana = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
 let mesAnio = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
 
 mostrarFecha.innerHTML = `${diaSemana[fecha.getDay()]}, ${fecha.getDate()} de ${mesAnio[fecha.getMonth()]} de ${fecha.getFullYear()}`;
 
-setInterval(()=>{
+setInterval(() => {
     let hora = new Date();
     mostrarReloj.innerHTML = hora.toLocaleTimeString();
-},1000);
+}, 1000);
 
+// Array global
+const baseDeEstudiantes = [];
 
-
-
-//array global
-baseDeEstudiantes = [];
-
-
-
-//Capturar a traves de una funcion constructora
 function capturar() {
+    const estudianteCapturado = document.getElementById("nombre").value;
+    const notaCapturada = document.getElementById("nota").value;
+
+    if (estudianteCapturado.trim() === '' || notaCapturada.trim() === '') {
+        alert("Por favor, completa todos los campos.");
+        return;
+    }
+
+    const nuevaNota = parseFloat(notaCapturada);
+    if (isNaN(nuevaNota) || nuevaNota < 0 || nuevaNota > 10) {
+        alert("La nota debe ser un número válido entre 0 y 10.");
+        return;
+    }
+
     class Estudiante {
-        constructor(nombre, nota){
-            this.nombre = nombre 
-            this.nota = parseFloat(nota); 
+        constructor(nombre, nota) {
+            this.nombre = nombre;
+            this.nota = parseFloat(nota);
         }
     }
-    estudianteCapturado = document.getElementById("nombre").value;
-    notaCapturada = document.getElementById("nota").value;
 
-    nuevoEstudiante = new Estudiante(estudianteCapturado, notaCapturada);
-    console.log(nuevoEstudiante);
-    agregar();
-
-}
-
-//Funcion agregar elementos al array
-function agregar(){
+    const nuevoEstudiante = new Estudiante(estudianteCapturado, notaCapturada);
     baseDeEstudiantes.push(nuevoEstudiante);
-    localStorage.getItem = estudianteCapturado;
-    localStorage.getItem = notaCapturada
-    console.log(baseDeEstudiantes);
-    mostrar()
-};
-function mostrar() {
-    let bases = JSON.parse(localStorage.bases)
-    bases.innertHTML += '<' 
+
+    mostrarEstudiantes();
 }
 
-//Funcion sacar elementos al array
-function sacar(){
-    baseDeEstudiantes.pop(nuevoEstudiante)
-    console.log(baseDeEstudiantes);
-}
+function mostrarEstudiantes() {
+    const tbody = document.getElementById('tbody');
+    tbody.innerHTML = '';
 
-//funciones de busqueda
-function buscarEstudiante() {
-    let nombreBuscado =  prompt("¿Que estudiante desea encontrar?");
-    const encontrado = baseDeEstudiantes.filter((el)=> {
-        return el.nombre === nombreBuscado;
+    baseDeEstudiantes.forEach(estudiante => {
+        const fila = document.createElement('tr');
+        const nombreColumna = document.createElement('td');
+        nombreColumna.textContent = estudiante.nombre;
+        const notaColumna = document.createElement('td');
+        notaColumna.textContent = estudiante.nota;
+
+        fila.appendChild(nombreColumna);
+        fila.appendChild(notaColumna);
+        tbody.appendChild(fila);
     });
-    console.log(encontrado);
-    
 }
 
-function buscarNota(){
-    let notaEncontrada = parseFloat(prompt("¿Que nota desea encontrar?"));
-    const encontrado1 = baseDeEstudiantes.filter((el) => {
-        return el.nota === notaEncontrada;}
-    );
-    console.log(encontrado1);
+function sacar() {
+    if (baseDeEstudiantes.length === 0) {
+        alert("No hay estudiantes para eliminar.");
+        return;
+    }
+
+    baseDeEstudiantes.pop();
+    mostrarEstudiantes();
 }
+
+// Resto del código...
