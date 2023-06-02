@@ -1,3 +1,6 @@
+//SIMULADOR DE CALIFICACIONES
+
+//función para mostrar la fecha y el reloj
 let mostrarFecha = document.getElementById('fecha');
 let mostrarReloj = document.getElementById('reloj');
 
@@ -12,54 +15,66 @@ setInterval(() => {
     mostrarReloj.innerHTML = hora.toLocaleTimeString();
 }, 1000);
 
-// Array global
-const baseDeEstudiantes = [];
+//array global
+let baseDeEstudiantes = [];
 
+//Función para capturar los datos del estudiante
 function capturar() {
-    const estudianteCapturado = document.getElementById("nombre").value;
-    const notaCapturada = document.getElementById("nota").value;
+    let nombreInput = document.getElementById("nombre").value;
+    let notaInput = document.getElementById("nota").value;
 
-    if (estudianteCapturado.trim() === '' || notaCapturada.trim() === '') {
-        alert("Por favor, completa todos los campos.");
+    // Validar que los campos no estén vacíos
+    if (nombreInput === "" || notaInput === "") {
+        alert("Por favor, complete todos los campos.");
         return;
     }
 
-    const nuevaNota = parseFloat(notaCapturada);
-    if (isNaN(nuevaNota) || nuevaNota < 0 || nuevaNota > 10) {
-        alert("La nota debe ser un número válido entre 0 y 10.");
+    // Validar que la nota sea un número del 0 al 10
+    if (isNaN(notaInput) || notaInput < 0 || notaInput > 10) {
+        alert("La nota debe ser un número del 0 al 10.");
         return;
     }
 
-    class Estudiante {
-        constructor(nombre, nota) {
-            this.nombre = nombre;
-            this.nota = parseFloat(nota);
-        }
-    }
+    let nuevoEstudiante = {
+        nombre: nombreInput,
+        nota: parseFloat(notaInput)
+    };
 
-    const nuevoEstudiante = new Estudiante(estudianteCapturado, notaCapturada);
     baseDeEstudiantes.push(nuevoEstudiante);
-
-    mostrarEstudiantes();
+    mostrarTabla();
+    resetForm();
 }
 
-function mostrarEstudiantes() {
-    const tbody = document.getElementById('tbody');
-    tbody.innerHTML = '';
+//Función para mostrar la tabla con los estudiantes
+function mostrarTabla() {
+    let tbody = document.getElementById("tbody");
+    tbody.innerHTML = "";
 
-    baseDeEstudiantes.forEach(estudiante => {
-        const fila = document.createElement('tr');
-        const nombreColumna = document.createElement('td');
-        nombreColumna.textContent = estudiante.nombre;
-        const notaColumna = document.createElement('td');
-        notaColumna.textContent = estudiante.nota;
+    if (baseDeEstudiantes.length === 0) {
+        return;
+    }
 
-        fila.appendChild(nombreColumna);
-        fila.appendChild(notaColumna);
+    baseDeEstudiantes.forEach((estudiante) => {
+        let fila = document.createElement("tr");
+        let columnaNombre = document.createElement("td");
+        let columnaNdo = document.createElement("td");
+
+        columnaNombre.textContent = estudiante.nombre;
+        columnaNdo.textContent = estudiante.nota;
+
+        fila.appendChild(columnaNombre);
+        fila.appendChild(columnaNdo);
         tbody.appendChild(fila);
     });
 }
 
+//Función para resetear el formulario
+function resetForm() {
+    document.getElementById("nombre").value = "";
+    document.getElementById("nota").value = "";
+}
+
+//Función para sacar el último estudiante de la lista
 function sacar() {
     if (baseDeEstudiantes.length === 0) {
         alert("No hay estudiantes para eliminar.");
@@ -67,39 +82,53 @@ function sacar() {
     }
 
     baseDeEstudiantes.pop();
-    mostrarEstudiantes();
-
-    if (baseDeEstudiantes.length === 0) {
-        alert("No se pueden eliminar más estudiantes. La lista está vacía.");
-    }
+    mostrarTabla();
 }
 
+//Función para buscar estudiantes por nombre
 function buscarEstudiante() {
     if (baseDeEstudiantes.length === 0) {
-        alert("No hay estudiantes guardados para realizar la búsqueda.");
+        alert("No hay estudiantes para buscar.");
         return;
     }
 
-    const nombreBuscado = prompt("¿Qué estudiante desea encontrar?");
-    const encontrados = baseDeEstudiantes.filter(estudiante => estudiante.nombre === nombreBuscado);
+    let nombreBuscado = prompt("Ingrese el nombre del estudiante a buscar:");
+    let estudiantesEncontrados = baseDeEstudiantes.filter((estudiante) => {
+        return estudiante.nombre.toLowerCase() === nombreBuscado.toLowerCase();
+    });
 
-    if (encontrados.length === 0) {
-        alert(`No se encontró ningún estudiante con el nombre "${nombreBuscado}".`);
-    } else {
-        alert(`Estudiantes encontrados con el nombre "${nombreBuscado}":\n${encontrados.map(estudiante => estudiante.nombre).join("\n")}`);
+    if (estudiantesEncontrados.length === 0) {
+        alert("No se encontraron estudiantes con ese nombre.");
+        return;
     }
+
+    let resultados = estudiantesEncontrados.map((estudiante) => {
+        return `${estudiante.nombre}: ${estudiante.nota}`;
+    });
+
+    alert(`Estudiantes encontrados:\n\n${resultados.join("\n")}`);
 }
 
+//Función para buscar estudiantes por nota
 function buscarNota() {
     if (baseDeEstudiantes.length === 0) {
-        alert("No hay estudiantes guardados para realizar la búsqueda.");
+        alert("No hay estudiantes para buscar.");
         return;
     }
 
-    const notaEncontrada = parseFloat(prompt("¿Qué nota desea buscar?"));
-    const encontrados = baseDeEstudiantes.filter(estudiante => estudiante.nota === notaEncontrada);
+    let notaBuscada = parseFloat(prompt("Ingrese la nota a buscar:"));
+    let estudiantesEncontrados = baseDeEstudiantes.filter((estudiante) => {
+        return estudiante.nota === notaBuscada;
+    });
 
-    if (encontrados.length === 0) {
-        alert(`No se encontró ningún estudiante con la nota "${notaEncontrada}".`);
-    } else {
-        alert(`Estudiantes encontrados con la nota "${notaEncontr
+    if (estudiantesEncontrados.length === 0) {
+        alert("No se encontraron estudiantes con esa nota.");
+        return;
+    }
+
+    let resultados = estudiantesEncontrados.map((estudiante) => {
+        return `${estudiante.nombre}: ${estudiante.nota}`;
+    });
+
+    alert(`Estudiantes encontrados:\n\n${resultados.join("\n")}`);
+}
