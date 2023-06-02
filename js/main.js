@@ -68,6 +68,38 @@ function sacar() {
 
     baseDeEstudiantes.pop();
     mostrarEstudiantes();
+
+    if (baseDeEstudiantes.length === 0) {
+        alert("No se pueden eliminar más estudiantes. La lista está vacía.");
+    }
 }
 
-// Resto del código...
+function buscarEstudiante() {
+    if (baseDeEstudiantes.length === 0) {
+        alert("No hay estudiantes guardados para realizar la búsqueda.");
+        return;
+    }
+
+    const nombreBuscado = prompt("¿Qué estudiante desea encontrar?");
+    const encontrados = baseDeEstudiantes.filter(estudiante => estudiante.nombre === nombreBuscado);
+
+    if (encontrados.length === 0) {
+        alert(`No se encontró ningún estudiante con el nombre "${nombreBuscado}".`);
+    } else {
+        alert(`Estudiantes encontrados con el nombre "${nombreBuscado}":\n${encontrados.map(estudiante => estudiante.nombre).join("\n")}`);
+    }
+}
+
+function buscarNota() {
+    if (baseDeEstudiantes.length === 0) {
+        alert("No hay estudiantes guardados para realizar la búsqueda.");
+        return;
+    }
+
+    const notaEncontrada = parseFloat(prompt("¿Qué nota desea buscar?"));
+    const encontrados = baseDeEstudiantes.filter(estudiante => estudiante.nota === notaEncontrada);
+
+    if (encontrados.length === 0) {
+        alert(`No se encontró ningún estudiante con la nota "${notaEncontrada}".`);
+    } else {
+        alert(`Estudiantes encontrados con la nota "${notaEncontr
